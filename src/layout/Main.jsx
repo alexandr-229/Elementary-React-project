@@ -12,17 +12,20 @@ export class Main extends React.Component {
     };
 
     componentDidMount() {
-        fetch(`http://www.omdbapi.com?apikey=${KEY}&s=matrix`)
+        fetch(`https://www.omdbapi.com?apikey=${KEY}&s=matrix`)
             .then((res) => res.json())
             .then((res) =>
                 this.setState({ movies: res.Search, loading: false })
-            );
+            )
+            .catch((e) => {
+                console.error(e);
+            });
     }
 
     searchMovies = (str, type = 'all') => {
         this.setState({ loading: true });
         fetch(
-            `http://www.omdbapi.com?apikey=${KEY}&s=${str}${
+            `https://www.omdbapi.com?apikey=${KEY}&s=${str}${
                 type !== 'all' ? `&type=${type}` : ''
             }`
         )
